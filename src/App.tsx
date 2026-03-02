@@ -222,7 +222,9 @@ function App() {
             <span className="sr-only">{isSidebarOpen ? 'Hide sidebar' : 'Show sidebar'}</span>
           </button>
           <div className="topbar-title">
-            <Link to="/">Shakthi&apos;s Studies</Link>
+            <Link to="/">
+              <span>Shakthi&apos;s Studies</span>
+            </Link>
             <p>Writing to understand.</p>
           </div>
         </div>
