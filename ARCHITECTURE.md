@@ -1,8 +1,8 @@
-# Shakthi's Studies Architecture
+# Shakthi's Archive Architecture
 
 ## Overview
 
-Shakthi's Studies is a static React + TypeScript + Vite app for publishing nested Markdown essays.
+Shakthi's Archive is a static React + TypeScript + Vite app for publishing nested Markdown essays.
 
 - Essays live in `src/content/**/*.md`
 - Folder nesting maps directly to sidebar navigation and essay routes
@@ -56,7 +56,7 @@ Responsibilities:
 Responsibilities:
 
 - Render folder/file hierarchy as collapsible tree
-- Keep manual open/close state in `localStorage` (`studies.tree.v1`)
+- Keep manual open/close state in `localStorage` (`archive.tree.v1`)
 - Auto-expand active essay ancestor folders
 - Navigate essays via `/<routePath>`
 

@@ -8,9 +8,9 @@ import { HomePage } from './pages/HomePage'
 
 type Theme = 'light' | 'dark'
 
-const THEME_STORAGE_KEY = 'studies.theme.v1'
-const SIDEBAR_STORAGE_KEY = 'studies.sidebar.v1'
-const SIDEBAR_WIDTH_STORAGE_KEY = 'studies.sidebar.width.v1'
+const THEME_STORAGE_KEY = 'archive.theme.v1'
+const SIDEBAR_STORAGE_KEY = 'archive.sidebar.v1'
+const SIDEBAR_WIDTH_STORAGE_KEY = 'archive.sidebar.width.v1'
 const DEFAULT_SIDEBAR_WIDTH = 330
 const MIN_SIDEBAR_WIDTH = 240
 const MAX_SIDEBAR_WIDTH = 520
@@ -223,7 +223,7 @@ function App() {
           </button>
           <div className="topbar-title">
             <Link to="/">
-              <span>Shakthi&apos;s Studies</span>
+              <span>Shakthi&apos;s Archive</span>
             </Link>
             <p>Writing to understand.</p>
           </div>

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import type { TreeNode } from '../lib/content'
 
-const STORAGE_KEY = 'studies.tree.v1'
+const STORAGE_KEY = 'archive.tree.v1'
 
 function getAncestorFolders(routePath: string): string[] {
   const parts = routePath.split('/').filter(Boolean)

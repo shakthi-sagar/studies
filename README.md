@@ -1,4 +1,4 @@
-# Shakthi's Studies
+# Shakthi's Archive
 
 Static React + Vite site for publishing nested Markdown essays.
 
