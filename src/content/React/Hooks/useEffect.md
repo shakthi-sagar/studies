@@ -31,3 +31,29 @@ useEffect(() => {
   }
 }, [])
 ```
+
+## Reference link
+
+[Watch related notes on YouTube](https://www.youtube.com/@shakthisagar)
+
+## Inline image preview
+
+![Study media preview](/essay-media-preview.svg)
+
+## YouTube iframe embed
+
+<iframe
+  src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  title="Sample YouTube Embed"
+  loading="lazy"
+  allowfullscreen
+></iframe>
+
+## Mermaid support
+
+```mermaid
+graph TD
+    A[Read] --> B[Write]
+    B --> C[Reflect]
+    C --> D[Understand]
+```

@@ -21,6 +21,8 @@
   --quote-border: #d7d7d7;
   --quote-text: #444444;
   --mobile-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+  --essay-media-max-width: 860px;
+  --essay-media-max-height: 540px;
   --sidebar-width: 330px;
   --topbar-height: 80px;
 }
@@ -528,6 +530,154 @@ code {
   border: 1px solid var(--border);
   padding: 0.45rem 0.55rem;
   text-align: left;
+}
+
+.essay-media-frame,
+.essay-image-frame,
+.mermaid-host,
+.mermaid-error {
+  width: min(100%, var(--essay-media-max-width));
+  margin: 1rem auto;
+}
+
+.essay-media-frame {
+  aspect-ratio: 16 / 9;
+  max-height: var(--essay-media-max-height);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface-muted);
+}
+
+.essay-media-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.essay-image-frame {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-muted);
+  padding: 0.35rem;
+}
+
+.essay-image-frame img {
+  width: 100%;
+  max-height: var(--essay-media-max-height);
+  object-fit: contain;
+  display: block;
+  border-radius: 7px;
+}
+
+.essay-image-frame figcaption {
+  margin-top: 0.45rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.mermaid-host {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-muted);
+  overflow: hidden;
+  position: relative;
+  height: 350px;
+  margin: 1rem 0;
+  touch-action: none;
+}
+
+.mermaid-host .mermaid {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible !important;
+  position: relative;
+}
+
+.mermaid-host .mermaid svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mermaid-controls {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.mermaid-host:hover .mermaid-controls {
+  opacity: 1;
+}
+
+.mermaid-btn {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.mermaid-btn:hover {
+  background: var(--surface-muted);
+  border-color: color-mix(in srgb, var(--border) 80%, var(--text));
+}
+
+.mermaid-btn:active {
+  background: color-mix(in srgb, var(--surface-muted) 80%, var(--border));
+}
+
+.mermaid-host:fullscreen {
+  background: var(--surface);
+  height: 100vh;
+  border: none;
+  border-radius: 0;
+  max-height: none;
+  margin: 0;
+  width: 100vw;
+}
+
+.mermaid-host:fullscreen .mermaid-controls {
+  opacity: 1;
+  top: 1rem;
+  right: 1rem;
+}
+
+.mermaid-error {
+  border-radius: 6px;
+}
+
+.essay-media-note {
+  margin: 0.85rem 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .essay-footer {

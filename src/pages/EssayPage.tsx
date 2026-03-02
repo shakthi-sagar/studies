@@ -1,6 +1,5 @@
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 import { Link, useParams } from 'react-router-dom'
+import { MarkdownContent } from '../components/MarkdownContent'
 import { essayByRoutePath } from '../lib/content'
 
 function normalizeRoutePath(pathParam?: string): string | undefined {
@@ -69,7 +68,7 @@ export function EssayPage() {
       </header>
 
       <section className="essay-markdown">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{essay.markdownBody}</ReactMarkdown>
+        <MarkdownContent markdown={essay.markdownBody} />
       </section>
 
       <footer className="essay-footer">
