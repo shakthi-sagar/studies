@@ -1,18 +1,32 @@
 import mermaid from 'mermaid'
 import elkLayouts from '@mermaid-js/layout-elk'
 
-let initialized = false
+let loaderRegistered = false
+let initializedTheme: 'default' | 'dark' | null = null
+
+function getMermaidTheme(): 'default' | 'dark' {
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default'
+}
 
 export function initMermaid() {
-  if (initialized) return
-  mermaid.registerLayoutLoaders(elkLayouts)
+  const mermaidTheme = getMermaidTheme()
+
+  if (!loaderRegistered) {
+    mermaid.registerLayoutLoaders(elkLayouts)
+    loaderRegistered = true
+  }
+
+  if (initializedTheme === mermaidTheme) {
+    return
+  }
+
   mermaid.initialize({
     startOnLoad: false,
-    theme: 'default',
+    theme: mermaidTheme,
     securityLevel: 'loose',
     maxTextSize: 200000,
   })
-  initialized = true
+  initializedTheme = mermaidTheme
 }
 
 // Store original mermaid source text so we can restore it before re-rendering

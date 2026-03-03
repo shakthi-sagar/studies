@@ -49,6 +49,22 @@ function getYouTubeEmbedUrl(value: string | undefined): string | null {
 function MermaidDiagram({ chart }: { chart: string }) {
   const hostRef = useRef<HTMLDivElement | null>(null)
   const [hasError, setHasError] = useState(false)
+  const [themeVersion, setThemeVersion] = useState(0)
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setThemeVersion((value) => value + 1)
+    })
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     const host = hostRef.current
@@ -60,6 +76,7 @@ function MermaidDiagram({ chart }: { chart: string }) {
 
     const run = async () => {
       try {
+        delete host.dataset.panzoom
         host.innerHTML = ''
         const node = document.createElement('pre')
         node.className = 'mermaid'
@@ -68,10 +85,7 @@ function MermaidDiagram({ chart }: { chart: string }) {
 
         await renderMermaidBlocks(host)
 
-        const renderedNode = host.querySelector<HTMLElement>('pre.mermaid')
-        if (renderedNode) {
-          setupPanZoom(renderedNode)
-        }
+        setupPanZoom(host)
 
         if (!isCancelled) {
           setHasError(false)
@@ -88,7 +102,7 @@ function MermaidDiagram({ chart }: { chart: string }) {
     return () => {
       isCancelled = true
     }
-  }, [chart])
+  }, [chart, themeVersion])
 
   if (hasError) {
     return (
