@@ -225,7 +225,6 @@ function App() {
             <Link to="/">
               <span>Shakthi&apos;s Archive</span>
             </Link>
-            <p>Writing to understand.</p>
           </div>
         </div>
         <div className="topbar-search" role="search">
