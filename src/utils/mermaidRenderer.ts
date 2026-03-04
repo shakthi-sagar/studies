@@ -32,6 +32,8 @@ export function initMermaid() {
 // Store original mermaid source text so we can restore it before re-rendering
 const sourceMap = new WeakMap<HTMLElement, string>()
 
+let renderQueue = Promise.resolve()
+
 export async function renderMermaidBlocks(container: HTMLElement) {
   initMermaid()
   const mermaidNodes = container.querySelectorAll<HTMLElement>('pre.mermaid')
@@ -46,26 +48,43 @@ export async function renderMermaidBlocks(container: HTMLElement) {
         node.textContent = original
       }
     } else {
-      // First time seeing this node - save the source
+      // First time seeing this node — save the source
       sourceMap.set(node, node.textContent || '')
+    }
+
+    // Assign a unique ID if it doesn't have one, to prevent concurrent rendering bugs
+    if (!node.id) {
+      node.id = `mermaid-${crypto.randomUUID()}`
     }
   })
 
-  await mermaid.run({ nodes: mermaidNodes as NodeListOf<HTMLElement> })
+  // Serialize mermaid.run to prevent concurrent rendering issues
+  renderQueue = renderQueue.then(async () => {
+    // Check which nodes are still attached to the DOM
+    const activeNodes = Array.from(mermaidNodes).filter((n) => n.isConnected)
+    if (activeNodes.length > 0) {
+      await mermaid.run({ nodes: activeNodes as unknown as NodeListOf<HTMLElement> })
+    }
+  })
+
+  await renderQueue
 }
 
 export function setupPanZoom(container: HTMLElement) {
   if (container.dataset.panzoom) return
-  container.dataset.panzoom = 'true'
 
   const svg = container.querySelector('svg')
-  if (!svg) return
+  if (!svg) return // SVG might not be rendered yet if error or still rendering
+
+  container.dataset.panzoom = 'true'
 
   // Ensure SVG has a viewBox so preserveAspectRatio works
   if (!svg.getAttribute('viewBox')) {
-    const w = parseFloat(svg.getAttribute('width') || '0') || svg.getBoundingClientRect().width
-    const h = parseFloat(svg.getAttribute('height') || '0') || svg.getBoundingClientRect().height
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`)
+    const w = parseFloat(svg.getAttribute('width') || '0') || svg.getBoundingClientRect()?.width || 0
+    const h = parseFloat(svg.getAttribute('height') || '0') || svg.getBoundingClientRect()?.height || 0
+    if (w > 0 && h > 0) {
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`)
+    }
   }
   svg.removeAttribute('width')
   svg.removeAttribute('height')
