@@ -11,13 +11,13 @@ These are tasks that are executed in the backend, independant from the main exec
 Used for purposes like, processing large volume for data during import or export, maintenance jobs like cleaning up old data, long running computations like data analysis etc.
 
 ```mermaid
-graph LR
+flowchart LR
     U[User] -->|Trigger Action| API[API Server]
     API -->|Immediate Response| U
     API -.->|Enqueue Task| Q[Message Queue]
     Q --> W1[Worker Process]
     Q --> W2[Worker Process]
-    W1 -.->|Update UI / DB| DB[(Database)]
+    W1 -.->|Update UI or DB| DB[(Database)]
 ```
 
 These are tasks which you dont want to make the user wait for to complete, instead the user is notified when the task is completed.

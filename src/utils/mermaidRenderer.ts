@@ -59,7 +59,7 @@ export async function renderMermaidBlocks(container: HTMLElement) {
   })
 
   // Serialize mermaid.run to prevent concurrent rendering issues
-  renderQueue = renderQueue.then(async () => {
+  const currentTask = renderQueue.then(async () => {
     // Check which nodes are still attached to the DOM
     const activeNodes = Array.from(mermaidNodes).filter((n) => n.isConnected)
     if (activeNodes.length > 0) {
@@ -67,7 +67,13 @@ export async function renderMermaidBlocks(container: HTMLElement) {
     }
   })
 
-  await renderQueue
+  // Catch errors internally so the queue itself never gets stuck in a rejected state
+  renderQueue = currentTask.catch((err) => {
+    console.warn('Mermaid task failed, queue moving on', err)
+  })
+
+  // Await the task so the caller (React component) knows if it threw an error
+  await currentTask
 }
 
 export function setupPanZoom(container: HTMLElement) {

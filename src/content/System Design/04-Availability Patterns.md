@@ -33,9 +33,9 @@ Types:
 One server is active while other in passive i.e on standby. Heartbeats are sent between active to passive regularly. In case of failure, the heartbeat is interrupted, causing the standby server to take over the IP address and continue service.
 
 ```mermaid
-graph LR
+flowchart LR
     U[User] -->|Traffic| A[Active Server]
-    A -.->|Heartbeat| P[Passive / Standby Server]
+    A -.->|Heartbeat| P[Passive or Standby Server]
     P -.->|Takes over on failure| A
 ```
 
@@ -75,10 +75,10 @@ Types:
 2 servers, both configured as masters. Both accept read and write operations. This gives high availablity as the other server can take over in case a failure. But issue if the same data is updated at the same time, these conflicts will need to be handled.
 
 ```mermaid
-graph LR
+flowchart LR
     U1[US Users] -->|Read / Write| M1[(US Master DB)]
     U2[IN Users] -->|Read / Write| M2[(IN Master DB)]
-    M1 <-->|Bi-directional Sync| M2
+    M1 <--> M2
 ```
 
 Multi region db, like US and India both handle their own requests. Now if US db fails, India db will start responding to the US server requests. This will ensure the users are still serviced, though with a bit of increased latency.
@@ -90,7 +90,7 @@ Multi region db, like US and India both handle their own requests. Now if US db 
 One server is master and other is slave. Master handles all the write operations, while the slaves handle the read operations. In case of a failure the slaves are promoted to master. Simpler than the Master-Master pattern to setup.
 
 ```mermaid
-graph TD
+flowchart TD
     U[User] -->|Write| M[(Master DB)]
     U -->|Read| S1[(Slave DB 1)]
     U -->|Read| S2[(Slave DB 2)]

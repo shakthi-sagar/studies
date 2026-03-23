@@ -38,8 +38,8 @@ sequenceDiagram
     participant Node3
     User->>Node1: Write Data
     Node1-->>User: Success (Immediate)
-    Node1-)Node2: Async Replicate
-    Node1-)Node3: Async Replicate
+    Node1-->>Node2: Async Replicate
+    Node1-->>Node3: Async Replicate
 ```
 
 This too ensures high availablity and low latency, but there can be inconsistencies between 2 versions of data.
